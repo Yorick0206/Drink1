@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>購買飲料</title>
+    <script>
+        let balance = 0; // 餘額從 0 開始
+        let drinkPrices = { "飲料1": 20, "飲料2": 25, "飲料3": 30 }; // 飲料的價格
+
+        // 更新餘額顯示
+        function updateBalanceDisplay() {
+            document.getElementById("balanceDisplay").innerText = "目前餘額: " + balance + " 元";
+        }
+
+        // 檢查是否有足夠餘額購買飲料
+        function checkPurchase() {
+            let selectedDrink = document.querySelector('input[name="drink"]:checked').value;
+            let price = drinkPrices[selectedDrink];
+
+            if (balance >= price) {
+                balance -= price;
+                alert("購買成功！剩餘餘額: " + balance + " 元");
+                updateBalanceDisplay(); // 更新餘額顯示
+            } else {
+                alert("餘額不足！目前餘額: " + balance + " 元");
+            }
+        }
+
+        // 儲值功能，讓使用者自行輸入金額
+        function addFunds() {
+            let addAmount = parseInt(document.getElementById("customAmount").value);
+            
+            // 檢查輸入是否為有效數字
+            if (isNaN(addAmount) || addAmount <= 0) {
+                alert("請輸入有效的儲值金額！");
+            } else {
+                balance += addAmount;
+                alert("成功儲值 " + addAmount + " 元！");
+                updateBalanceDisplay(); // 更新餘額顯示
+            }
+        }
+    </script>
+</head>
+<body onload="updateBalanceDisplay()"> <!-- 頁面加載時顯示初始餘額 -->
+    <h1>購買飲料</h1>
+    
+    <!-- 顯示餘額的區域 -->
+    <div id="balanceDisplay">目前餘額: 0元</div>
+    <br>
+
+    <!-- 選擇飲料 -->
+    <form>
+        <input type="radio" name="drink" value="飲料1" checked> 飲料1 - 20元<br>
+        <input type="radio" name="drink" value="飲料2"> 飲料2 - 25元<br>
+        <input type="radio" name="drink" value="飲料3"> 飲料3 - 30元<br><br>
+        <button type="button" onclick="checkPurchase()">確定購買</button>
+    </form>
+
+    <br><br>
+
+    <!-- 儲值區域 -->
+    <h2>儲值金額</h2>
+    <form>
+        <label for="customAmount">輸入儲值金額：</label>
+        <input type="number" id="customAmount" placeholder="輸入金額"><br><br>
+        <button type="button" onclick="addFunds()">儲值</button>
+    </form>
+
+</body>
+</html>
+
